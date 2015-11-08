@@ -12,7 +12,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 
 def read_data(fileName):
-    df = pd.read_csv(fileName, encoding='utf-8', sep=r'\t+', header=None, names=['text', 'label'])
+    df = pd.read_csv(fileName, encoding='utf-8', sep=r'\t+', engine='python', header=None, names=['text', 'label'])
     print('size of the data = ', df.shape)
     return df
 
