@@ -1,9 +1,6 @@
 import numpy as np
 import pandas as pd
   
-=======
-   
->>>>>>> origin/master
 from time import time
 from subprocess import call
 
