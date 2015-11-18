@@ -1,9 +1,8 @@
+#CS229 - Project
+
 import numpy as np
 import pandas as pd
-  
-=======
    
->>>>>>> origin/master
 from time import time
 from subprocess import call
 
@@ -66,15 +65,15 @@ def benchmark(clf, X, y, eval_gold=False):
     print(cm)
 
     if eval_gold:
-        gold_output = 'MNB.txt'
+        gold_output = '../data/temp_output/MNB.txt'
         pd.Series(pred).to_csv(gold_output, index=False)
         #system("python evaluate.py %s test-gold.txt" % gold_output)
-        call(["python", "evaluate.py", "%s" %gold_output, "test-gold.txt"])
+        call(["python", "evaluate.py", "%s" %gold_output, "../data/test/test-gold.txt"])
 
 def main():
-    trainData = read_data('train.txt')
-    develData = read_data('devel.txt')
-    goldData = read_data('test-gold.txt')
+    trainData = read_data('../data/train/train.txt')
+    develData = read_data('../data/dev/devel.txt')
+    goldData = read_data('../data/test/test-gold.txt')
 
     vectorizer = get_vectorizer({'vid': 1, 'ng_max': 1})
     (Xtrain, ytrain) = vectorize_data(vectorizer, trainData, 1)
