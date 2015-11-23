@@ -2,7 +2,10 @@
 
 import numpy as np
 import pandas as pd
-   
+import os
+import matplotlib
+import matplotlib.pyplot as plt
+
 from time import time
 from subprocess import call
 
@@ -12,6 +15,12 @@ from sklearn.cross_validation import StratifiedShuffleSplit
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
+from sklearn.linear_model import LogisticRegressionCV
+from sklearn.decomposition import PCA
+from sklearn.decomposition import TruncatedSVD
+from collections import defaultdict
+from itertools import count
+from functools import partial
 
 def read_data(fileName):
     df = pd.read_csv(fileName, encoding='utf-8', sep=r'\t+', engine='python', header=None, names=['text', 'label'])
@@ -70,6 +79,15 @@ def benchmark(clf, X, y, eval_gold=False):
         #system("python evaluate.py %s test-gold.txt" % gold_output)
         call(["python", "evaluate.py", "%s" %gold_output, "../data/test/test-gold.txt"])
 
+def apply_svd(X, dim):
+    print('X.shape', X.shape)
+    svd = TruncatedSVD(n_components=dim)
+    svd.fit(X)
+    Xdim = svd.transform(X)
+    print('Xdim.shape', Xdim.shape)
+
+    return Xdim
+
 def main():
     trainData = read_data('../data/train/train.txt')
     develData = read_data('../data/dev/devel.txt')
@@ -78,10 +96,14 @@ def main():
     vectorizer = get_vectorizer({'vid': 1, 'ng_max': 1})
     (Xtrain, ytrain) = vectorize_data(vectorizer, trainData, 1)
     (Xgold, ygold) = vectorize_data(vectorizer, goldData, 0)
+    
+    x_dim = 14
+    Xtrain = apply_svd(Xtrain, x_dim)
+    Xgold = apply_svd(Xgold, x_dim)
 
-    print("Testbenching a MultinomialNB classifier...")
-    parameters = {'alpha': 0.01}
-    clf = train_model(Xtrain, ytrain, MultinomialNB, parameters)
+    print("Testbenching a LogisticRegressionCV classifier...")
+    parameters = {}
+    clf = train_model(Xtrain, ytrain, LogisticRegressionCV, parameters)
     print(clf)
     benchmark(clf, Xgold, ygold, eval_gold=True)
 
