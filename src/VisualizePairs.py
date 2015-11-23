@@ -2,7 +2,10 @@
 
 import numpy as np
 import pandas as pd
-   
+import os
+import matplotlib
+import matplotlib.pyplot as plt
+  
 from time import time
 from subprocess import call
 from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
@@ -15,15 +18,26 @@ from sklearn.metrics import classification_report
 from sklearn.linear_model import LogisticRegressionCV
 from sklearn.decomposition import PCA
 from sklearn.decomposition import TruncatedSVD
-
-import matplotlib
-import matplotlib.pyplot as plt
-
 from collections import defaultdict
 from itertools import count
 from functools import partial
 
-import os
+lang_name_dict = {
+   'bg':'Bulgarian',
+   'es-ES': 'Spanish(Spain)',
+   'my':'Malaysian',
+   'sr':'Serbian',
+   'xx':'Random',
+   'bs':'Bosnian',
+   'hr':'Hungary',
+   'pt-BR':'Portuguese (Brazil)',
+   'cz': 'Czech',
+   'id': 'Indonesia',
+   'pt-PT':'Portuguese (Portugal)',
+   'es-AR': 'Spanish (Argentina)',
+   'mk': 'Macedonia',
+   'sk': 'Slovakia'
+}
 
 def plot_decision_boundary(lang_codes, X, y, pred_func):
   # Set min and max values and give it some padding
@@ -108,27 +122,6 @@ def train_model(X, y, clf_class, params):
     print("done in %fs" % (time() - t0))
     return clf
 
-def benchmark(clf, X, y, eval_gold=False):
-    print("Predicting the outcomes of the testing set")
-    t0 = time()
-    pred = clf.predict(X)
-    print("done in %fs" % (time() - t0))
-
-    print("Classification report on test set for classifier:")
-    print(clf)
-    print()
-    print(classification_report(y, pred))
-    
-    cm = confusion_matrix(y, pred)
-    print("Confusion matrix:")
-    print(cm)
-
-    if eval_gold:
-        gold_output = '../data/temp_output/MNB.txt'
-        pd.Series(pred).to_csv(gold_output, index=False)
-        #system("python evaluate.py %s test-gold.txt" % gold_output)
-        call(["python", "evaluate.py", "%s" %gold_output, "../data/test/test-gold.txt"])
-
 def get_data_file_names(env, lang_codes): 
     root_dir = '../data/' + env + '/'
     data_file_names = []
@@ -139,11 +132,15 @@ def get_data_file_names(env, lang_codes):
 def visualize_language_pairs(env, lang_codes):
     lang_pairs = '_'.join(lang_codes)
     print('Visualizing lang pairs', lang_pairs, '***********************')
+    
     data_file_names = get_data_file_names(env, lang_codes)
     data = read_data_files(data_file_names)
+    
     vectorizer = get_vectorizer({'vid': 1, 'ng_max': 1})
     (X, y) = vectorize_data(vectorizer, data, 1)
+    
     Xdim = apply_svd(X, 2)
+    
     parameters = {}       
     clf = train_model(Xdim, y, LogisticRegressionCV, parameters)
    
@@ -187,22 +184,6 @@ def get_lang_names(lang_codes):
    for lang_code in lang_codes:
       lang_names.append(lang_name_dict[lang_code])
    return lang_names
-lang_name_dict = {
-   'bg':'Bulgarian',
-   'es-ES': 'Spanish(Spain)',
-   'my':'Malaysian',
-   'sr':'Serbian',
-   'xx':'Random', 
-   'bs':'Bosnian',
-   'hr':'Hungary',
-   'pt-BR':'Portuguese (Brazil)', 
-   'cz': 'Czech',
-   'id': 'Indonesia',
-   'pt-PT':'Portuguese (Portugal)', 
-   'es-AR': 'Spanish (Argentina)',
-   'mk': 'Macedonia',
-   'sk': 'Slovakia'
-}
 
 def main():
     lang_codes= ['bg','es-ES','my','sr','xx','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']  
