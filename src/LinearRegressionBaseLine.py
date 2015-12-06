@@ -50,7 +50,7 @@ def read_data(fileName):
 
 def read_data_filtered_by_lang_codes(fileName, lang_codes):
     df = read_data(fileName)
-    #df = df.sample(frac=0.05)
+    df = df.sample(frac=0.05)
     df = df[df['label'].isin(lang_codes)].reindex()
        
     print('size of the data (filtered) = ', df.shape)
@@ -130,7 +130,6 @@ def plot_tsne(Xin,Yin):
        xc = [p for (j,p) in enumerate(X[:,0]) if labels[j]==cla]
        yc = [p for (j,p) in enumerate(X[:,1]) if labels[j]==cla]
        zc = [p for (j,p) in enumerate(X[:,2]) if labels[j]==cla]
-       cols = [c for (j,c) in enumerate(labels) if labels[j]==cla]
        ax.scatter(xc,yc,zc,c=set2[i],label=lang_name_dict[cla], marker=markers[i%len(markers)], s=40)
     ax.set_xlabel('X Label')
     ax.set_ylabel('Y Label')
@@ -140,9 +139,12 @@ def plot_tsne(Xin,Yin):
     ax.set_zlim([np.min(X[:,2]), np.max(X[:,2])])
     ax.legend(loc=2)
     Plot.savefig('tsne3D.png')
+    Plot.savefig('tsne3D.fig')
+    Plot.show()
     
 def main():
-    lang_codes= ['bg','es-ES','my','sr','xx','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']
+    #lang_codes= ['bg','es-ES','my','sr','xx','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']
+    lang_codes= ['bg','es-ES','my','sr','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']
 
     trainData = read_data_filtered_by_lang_codes('../data/train/train.txt', lang_codes)
     # develData = read_data_filtered_by_lang_codes('../data/dev/devel.txt', lang_codes)
