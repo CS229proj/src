@@ -142,9 +142,7 @@ def plot_tsne(Xin,Yin):
     Plot.savefig('tsne3D.png')
     
 def main():
-    #lang_codes= ['bg','es-ES','my','sr','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']
-    lang_codes= ['es-ES','my','bs','hr','pt-PT','mk','sk']
-    #lang_codes= ['bg','sr','pt-BR','cz','id','es-AR']
+    lang_codes= ['bg','es-ES','my','sr','xx','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']
 
     trainData = read_data_filtered_by_lang_codes('../data/train/train.txt', lang_codes)
     # develData = read_data_filtered_by_lang_codes('../data/dev/devel.txt', lang_codes)
