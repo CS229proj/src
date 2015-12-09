@@ -162,7 +162,7 @@ def visualize_languages(env, lang_codes):
        language_code1 = lang_codes[i]
        for j in range(0, len(lang_codes)):
           language_code2 = lang_codes[j]
-          if i >= j:
+          if i == j:
              continue
           lang_pairs = []
           lang_pairs.append(language_code1)
@@ -187,7 +187,7 @@ def get_lang_names(lang_codes):
 
 def main():
     lang_codes= ['bg','es-ES','my','sr','xx','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']  
-    visualize_languages('test', lang_codes )    
+    visualize_languages('test', lang_codes )
     
 if __name__=='__main__':
     main()
