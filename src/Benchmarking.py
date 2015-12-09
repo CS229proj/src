@@ -66,7 +66,7 @@ def get_confusion_matrix(pred, y):
     print(cm)
     return cm
 
-def get_google_predictions(X, apikey):
+def get_google_predictions(X):
     pred = []
     url = 'https://www.googleapis.com/language/translate/v2/detect?key=AIzaSyBz5jW8MBXCfJWsJg2w6MDJPXygo9_8mO0&quotaUser=ebudur&project:prime-micron-115405:10'
     print('Request started')
