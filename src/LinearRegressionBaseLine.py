@@ -25,6 +25,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import pylab as Plot
 import matplotlib.cm as cm
 from palettable.tableau import Tableau_20
+from matplotlib import animation
 
 lang_name_dict = {
    'bg':'Bulgarian',
@@ -33,7 +34,7 @@ lang_name_dict = {
    'sr':'Serbian',
    'xx':'Random',
    'bs':'Bosnian',
-   'hr':'Hungary',
+   'hr':'Croatian',
    'pt-BR':'Portuguese (Brazil)',
    'cz': 'Czech',
    'id': 'Indonesia',
@@ -50,7 +51,7 @@ def read_data(fileName):
 
 def read_data_filtered_by_lang_codes(fileName, lang_codes):
     df = read_data(fileName)
-    #df = df.sample(frac=0.05)
+    df = df.sample(frac=0.05)
     df = df[df['label'].isin(lang_codes)].reindex()
        
     print('size of the data (filtered) = ', df.shape)
@@ -117,6 +118,21 @@ def apply_svd(X, dim):
 
     return Xdim
 
+fig = Plot.figure()
+ax = Axes3D(fig)
+
+def animate(i):
+    ax.view_init(elev=5., azim=i)
+    ax.legend(loc=2, fancybox=True, framealpha=0.5)
+
+def init_plot_tsne():
+    ax.set_xlabel('')
+    ax.set_ylabel('')
+    ax.set_zlabel('')
+
+
+
+
 def plot_tsne(Xin,Yin):
     set2 = Tableau_20.mpl_colors
     X = tsne(Xin, 3, 50, 20.0)
@@ -124,28 +140,52 @@ def plot_tsne(Xin,Yin):
     print(X.shape)
     labels  = Yin.values
     markers = ["o" ,"<", ">", "^", "v", "x" ]
-    fig = Plot.figure()
-    ax = Axes3D(fig)
+
+    #colors = ["yellow", "blue", "blue", "orange", "red","green", "brown", "brown"]
+    #colors = ["blue", "red", "yellow", "orange","orange", "green","red"]
+    #colors = ["blue", "red", "green", "orange", "brown","brown"]
     for (i,cla) in enumerate(set(labels)):
        xc = [p for (j,p) in enumerate(X[:,0]) if labels[j]==cla]
        yc = [p for (j,p) in enumerate(X[:,1]) if labels[j]==cla]
        zc = [p for (j,p) in enumerate(X[:,2]) if labels[j]==cla]
-       cols = [c for (j,c) in enumerate(labels) if labels[j]==cla]
        ax.scatter(xc,yc,zc,c=set2[i],label=lang_name_dict[cla], marker=markers[i%len(markers)], s=40)
-    ax.set_xlabel('X Label')
-    ax.set_ylabel('Y Label')
-    ax.set_zlabel('Z Label')
+    #ax.set_xlabel('X Label')
+    #ax.set_ylabel('Y Label')
+    #ax.set_zlabel('Z Label')
     ax.set_xlim([np.min(X[:,0])-40, np.max(X[:,0])])
     ax.set_ylim([np.min(X[:,1]), np.max(X[:,1])])
     ax.set_zlim([np.min(X[:,2]), np.max(X[:,2])])
+
+
+    init_plot_tsne()
+    # Animate
+    #anim = animation.FuncAnimation(fig, animate, init_func=init_plot_tsne, frames=360, interval=20, blit = False)
+    # Save
+    #FFwriter = animation.FFMpegWriter()
+    print ("animating...")
+    #anim.save('basic_animation.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
+    print ("animated...")
     ax.legend(loc=2)
     Plot.savefig('tsne3D.png')
+<<<<<<< HEAD
     
 def main():
     #lang_codes= ['bg','es-ES','my','sr','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']
     lang_codes= ['es-ES','my','bs','hr','pt-PT','mk','sk']
     #lang_codes= ['bg','sr','pt-BR','cz','id','es-AR']
+=======
+    Plot.show()
 
+
+>>>>>>> 8f8e403400f30265fc9805586d192c659fcc605d
+
+
+def main():
+    lang_codes= ['bg','es-ES','my','sr','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']
+    #lang_codes= ['bg','mk','sk','cz','my','id']
+    #lang_codes= ['bs','sr','hr','es-ES','es-AR', 'pt-PT','pt-BR']
+    #lang_codes2= ['bg','sr','pt-BR','cz','id','es-AR']
+    #lang_codes= ['bg','sr']
     trainData = read_data_filtered_by_lang_codes('../data/train/train.txt', lang_codes)
     # develData = read_data_filtered_by_lang_codes('../data/dev/devel.txt', lang_codes)
     goldData = read_data_filtered_by_lang_codes('../data/test/test-gold.txt', lang_codes)
@@ -160,7 +200,7 @@ def main():
     print("Xgold.shape:")
     print(Xgold.shape)    
     plot_tsne(Xgold,ygold)
-     
+
     print("Testbenching a LogisticRegressionCV classifier...")
     parameters = {}
     clf = train_model(Xtrain, ytrain, LogisticRegressionCV, parameters)
