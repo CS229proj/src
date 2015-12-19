@@ -167,17 +167,9 @@ def plot_tsne(Xin,Yin):
     print ("animated...")
     ax.legend(loc=2)
     Plot.savefig('tsne3D.png')
-<<<<<<< HEAD
-    
-def main():
-    #lang_codes= ['bg','es-ES','my','sr','bs','hr','pt-BR','cz','id','pt-PT','es-AR','mk','sk']
-    lang_codes= ['es-ES','my','bs','hr','pt-PT','mk','sk']
-    #lang_codes= ['bg','sr','pt-BR','cz','id','es-AR']
-=======
     Plot.show()
 
 
->>>>>>> 8f8e403400f30265fc9805586d192c659fcc605d
 
 
 def main():
