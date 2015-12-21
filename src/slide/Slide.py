@@ -44,7 +44,7 @@ class Slide(object):
 
             [X_train_vectorized, Y_train_vectorized] = Utils.vectorize_xy(X_train_raw, Y_train_raw, tokenizer, self.__label_encoder)
 
-            print(X_train_vectorized.shape)
+            print(len(X_train_vectorized))
             print(len(Y_train_vectorized))
             print(n_features)
 
