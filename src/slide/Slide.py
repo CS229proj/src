@@ -42,9 +42,9 @@ class Slide(object):
 
             print('current_ngram : ', num_ngram)
             tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
-
-            X_train_vectorized = tokenizer.fit_transform(X_train_raw)
-            Y_train_vectorized = self.__label_encoder.fit_transform(Y_train_raw)
+            
+            X_train_vectorized = Utils.create_term_document_matrix(X_train_raw)
+            Y_train_vectorized = Utils.vectorize_y(Y_train_raw)
 
             print(len(X_train_vectorized))
             print(len(Y_train_vectorized))
@@ -61,9 +61,10 @@ class Slide(object):
         preds = []
 
         for (tokenizer, model) in self.__trained_models:
-            X_test_vectorized = tokenizer.transform(X_test_raw)
+            X_test_vectorized = Utils.create_document_term_matrix(X_test_raw)
             predictions = model.predict(X_test_vectorized)
             Y_test_predicted_vectorized = np.argmax(predictions, axis=1)
+
             Y_test_raw = Utils.devectorize_y(Y_test_predicted_vectorized, self.__label_encoder)
             preds.append(Y_test_raw)
 

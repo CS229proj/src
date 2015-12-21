@@ -8,7 +8,7 @@ def vectorize_xy(X,Y, tokenizer, label_encoder):
     print("Data vectorized.")
     return [X_matrix, Y_vector]
 
-def vectorize_x(X, tokenizer):
+def create_term_document_matrix(X, tokenizer):
     X_matrix = tokenizer.fit_transform(X)
     return X_matrix
 
@@ -20,6 +20,10 @@ def vectorize_y(Y, label_encoder):
 def devectorize_y(Y_vector, label_encoder):
     Y = label_encoder.nverse_transform(Y_vector)
     return Y
+
+def create_document_term_matrix(X, tokenizer):
+    X_matrix = tokenizer.transform(X)
+    return X_matrix
 
 def get_y(fl):
     data = pd.read_csv(fl, encoding='utf-8', sep=r'\t+', header=None, names=['text', 'label'])
