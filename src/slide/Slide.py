@@ -11,8 +11,7 @@ import Utils
 class Slide(object):
 
 
-    def __init__(self, max_ngram):
-        self.__max_ngram=max_ngram
+    def __init__(self):
         self.__label_encoder = preprocessing.LabelEncoder()
         self.__trained_models = []
 
@@ -32,22 +31,26 @@ class Slide(object):
     def train(self, train_file):
         print('training ', train_file)
         train_data = pd.read_csv(train_file, encoding='utf-8', sep=r'\t+', header=None, names=['text', 'label'])
+
         X_train_raw = train_data['text'].values
         Y_train_raw = train_data['label'].values
 
-        for num_ngram in range(2, self.__max_ngram+1):
+        print(X_train_raw.shape)
+        print(Y_train_raw.shape)
 
-            print('current_ngram : ', num_ngram, ', max_ngram :', self.__max_ngram)
+        for num_ngram in [4,3,2,5]:
+
+            print('current_ngram : ', num_ngram)
             tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
-            n_features=tokenizer.num_features
 
-            [X_train_vectorized, Y_train_vectorized] = Utils.vectorize_xy(X_train_raw, Y_train_raw, tokenizer, self.__label_encoder)
+            X_train_vectorized = tokenizer.fit_transform(X_train_raw)
+            Y_train_vectorized = self.__label_encoder.fit_transform(Y_train_raw)
 
             print(len(X_train_vectorized))
             print(len(Y_train_vectorized))
-            print(n_features)
+            print(tokenizer.num_features)
 
-            model = self.__fit_model(X_train_vectorized, Y_train_vectorized, n_features)
+            model = self.__fit_model(X_train_vectorized, Y_train_vectorized, tokenizer.num_features)
             self.__trained_models.append((tokenizer, model))
 
     def predict(self, test_file):
@@ -58,7 +61,7 @@ class Slide(object):
         preds = []
 
         for (tokenizer, model) in self.__trained_models:
-            X_test_vectorized = Utils.vectorize_x(X_test_raw, tokenizer)
+            X_test_vectorized = tokenizer.transform(X_test_raw)
             predictions = model.predict(X_test_vectorized)
             Y_test_predicted_vectorized = np.argmax(predictions, axis=1)
             Y_test_raw = Utils.devectorize_y(Y_test_predicted_vectorized, self.__label_encoder)

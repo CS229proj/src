@@ -1,8 +1,9 @@
 import pandas as pd
 
 def vectorize_xy(X,Y, tokenizer, label_encoder):
-    X_matrix = vectorize_x(X, tokenizer)
+
     Y_vector = vectorize_y(Y, label_encoder)
+    X_matrix = vectorize_x(X, tokenizer)
     print(tokenizer.n_features)
     print("Data vectorized.")
     return [X_matrix, Y_vector]
@@ -13,6 +14,7 @@ def vectorize_x(X, tokenizer):
 
 def vectorize_y(Y, label_encoder):
     Y_vector = label_encoder.fit_transform(Y)
+    print(label_encoder.classes_)
     return Y_vector
 
 def devectorize_y(Y_vector, label_encoder):

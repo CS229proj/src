@@ -10,7 +10,7 @@ def main():
     test_file = "../../data/test/test.txt"
     gold_file = "../../data/test/test-gold.txt"
 
-    slide = lid.Slide(max_ngram = 2)
+    slide = lid.Slide()
     slide.train(train_file)
     pc.dump(slide, 'slide_trained.dat')
     predictions = slide.predict(test_file)

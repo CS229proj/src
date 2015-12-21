@@ -26,6 +26,7 @@ class CharTokenize(Tokenizer):
         self.encoder['UNK'] = 2
         self.decoder = dict(zip(self.encoder.values(), self.encoder.keys()))
         self.n_features = len(self.encoder)
+        print('self.n_features ', self.n_features)
         self.num_features = self.n_features
         return self
 
