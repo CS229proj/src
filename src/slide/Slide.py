@@ -42,11 +42,11 @@ class Slide(object):
             tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
             n_features=tokenizer.num_features
 
+            [X_train_vectorized, Y_train_vectorized] = Utils.vectorize_xy(X_train_raw, Y_train_raw, tokenizer, self.__label_encoder)
+
             print(X_train_vectorized.shape)
             print(len(Y_train_vectorized))
             print(n_features)
-            
-            [X_train_vectorized, Y_train_vectorized] = Utils.vectorize_xy(X_train_raw, Y_train_raw, tokenizer, self.__label_encoder)
 
             model = self.__fit_model(X_train_vectorized, Y_train_vectorized, n_features)
             self.__trained_models.append((tokenizer, model))
