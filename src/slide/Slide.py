@@ -36,9 +36,9 @@ class Slide(object):
         X_train_raw = train_data['text'].values
         Y_train_raw = train_data['label'].values
 
-        for i in range(self.__max_ngram):
-            num_ngram = i+1
-            print('train iteration ', i, ' of ', self.__max_ngram)
+        for num_ngram in range(2, self.__max_ngram+1):
+
+            print('current_ngram : ', num_ngram, ', max_ngram :', self.__max_ngram)
             tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
             n_features=tokenizer.num_features
 
