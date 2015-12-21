@@ -10,12 +10,11 @@ import Utils
 
 class Slide(object):
 
-    __max_ngram=5
-    __trained_models = []
-    __label_encoder = preprocessing.LabelEncoder()
 
     def __init__(self, max_ngram):
-        __max_ngram=max_ngram
+        self.__max_ngram=max_ngram
+        self.__label_encoder = preprocessing.LabelEncoder()
+        self.__trained_models = []
 
     def __fit_model(self, X, Y, num_features):
 
