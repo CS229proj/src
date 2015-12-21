@@ -1,7 +1,6 @@
-
 import io
 
-from evaluate import breakdown_evaluation, main
+from dsl.evaluate import breakdown_evaluation
 
 open_submissions = {'nrc': ['submissions/nrc/nrc-catego-open-run1.txt',
                             'submissions/nrc/nrc-catego-open-run2.txt'],
