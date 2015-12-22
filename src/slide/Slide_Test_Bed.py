@@ -13,7 +13,7 @@ def main():
     slide = lid.Slide()
     slide.train(train_file)
 
-    slide.save('slide_trained.dat')
+    slide.save_model('slide_trained.dat')
 
     predictions = slide.predict(test_file)
 

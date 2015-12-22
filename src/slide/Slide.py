@@ -8,6 +8,7 @@ from sklearn import preprocessing
 import CharTokenize as ct
 import Utils
 import pickle as pc
+from passage.utils import save, load
 
 class Slide(object):
 
@@ -73,7 +74,9 @@ class Slide(object):
 
         return Y_test_predicted
 
-    def save(self, filename):
-        output = open(filename, 'wb')
-        pc.dump(self.__trained_models, output, -1)
-        output.close()
+    def save_model(self, filename):
+        i = 1
+        for model in self.__trained_models:
+            tmp_filename =  filename + '.'+ str(i)
+            save(model, tmp_filename)
+            i = i + 1
