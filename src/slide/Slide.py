@@ -75,6 +75,8 @@ class Slide(object):
         return Y_test_predicted
 
     def save_model(self, filename):
+        import sys
+        sys.setrecursionlimit(10000)
         i = 1
         for (tokenizer, model) in self.__trained_models:
             tmp_model_filename =  filename + '.'+ str(i) + '.model'
