@@ -80,8 +80,9 @@ class Slide(object):
             tmp_model_filename =  filename + '.'+ str(i) + '.model'
             save(model, tmp_model_filename)
             tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
-            tokenizer_file = open(tmp_tokenizer_filename)
+            tokenizer_file = open(tmp_tokenizer_filename, 'wb')
             pc.dump(model, tokenizer_file)
+            tokenizer_file.close()
             i = i + 1
 
     def load_model(self, filename):
