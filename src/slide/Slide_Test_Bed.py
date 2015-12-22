@@ -11,10 +11,10 @@ def main():
     gold_file = "../../data/test/test-gold.txt"
 
     slide = lid.Slide()
-    #slide.train(train_file)
-    #slide.save_model('saved_models/slide_trained.dat')
+    slide.train(train_file)
+    slide.save_model('saved_models/slide_trained.dat')
     slide.load_model('saved_models/slide_trained.dat')
-
+ 
     predictions = slide.predict(test_file)
 
     gold_labels = Utils.get_y(gold_file)

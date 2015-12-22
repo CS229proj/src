@@ -76,7 +76,7 @@ class Slide(object):
 
     def save_model(self, filename):
         import sys
-        sys.setrecursionlimit(10000)
+        sys.setrecursionlimit(100000)
         i = 1
         for (tokenizer, model) in self.__trained_models:
             try:
@@ -94,6 +94,8 @@ class Slide(object):
             except:
                 print('Saving error ', i, ' will continue with saving next model ')
             i = i + 1
+
+        print('model saved')
 
     def load_model(self, filename):
         i = 1
@@ -113,6 +115,10 @@ class Slide(object):
 
                 self.__trained_models.append((tokenizer, model))
             except BaseException:
-                print('Model not found', tmp_model_filename)
+                print('Exception while loading ', i)
+                print(tmp_model_filename)
+                print(tmp_tokenizer_filename)
                 break
             i = i + 1
+
+
