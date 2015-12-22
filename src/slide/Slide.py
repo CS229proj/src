@@ -24,7 +24,7 @@ class Slide(object):
         ]
 
         model = RNN(layers=layers, cost='cce', updater=Adadelta(lr=0.5))
-        model.fit(X, Y, n_epochs=10)
+        model.fit(X, Y, n_epochs=1)
 
         return model
 
@@ -38,7 +38,7 @@ class Slide(object):
         print(X_train_raw.shape)
         print(Y_train_raw.shape)
 
-        for num_ngram in [4,3,2,5]:
+        for num_ngram in [2]:#,3,2,5]:
 
             print('current_ngram : ', num_ngram)
             tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
