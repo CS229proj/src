@@ -79,17 +79,20 @@ class Slide(object):
         sys.setrecursionlimit(10000)
         i = 1
         for (tokenizer, model) in self.__trained_models:
-            print('saving model ', i)
-            tmp_model_filename =  filename + '.'+ str(i) + '.model'
-            save(model, tmp_model_filename)
-            print('model saved ', i)
+            try:
+                print('saving model ', i)
+                tmp_model_filename =  filename + '.'+ str(i) + '.model'
+                save(model, tmp_model_filename)
+                print('model saved ', i)
 
-            print('saving tokenizer ', i)
-            tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
-            tokenizer_file = open(tmp_tokenizer_filename, 'wb')
-            pc.dump(model, tokenizer_file, 2)
-            tokenizer_file.close()
-            print('tokenizer saved ', i)
+                print('saving tokenizer ', i)
+                tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
+                tokenizer_file = open(tmp_tokenizer_filename, 'wb')
+                pc.dump(model, tokenizer_file, 2)
+                tokenizer_file.close()
+                print('tokenizer saved ', i)
+            except:
+                print('Saving error ', i, ' will continue with saving next model ')
             i = i + 1
 
     def load_model(self, filename):
@@ -98,18 +101,18 @@ class Slide(object):
         while (True):
             tmp_model_filename =  filename + '.'+ str(i) + '.model'
             tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
-            i = i + 1
-            try:
-                print('loading model')
-                model = load(tmp_model_filename)
-                print('model loaded')
 
-                print('loading tokenizer')
+            try:
+                print('loading model ', i)
+                model = load(tmp_model_filename)
+                print('model loaded ', i)
+
+                print('loading tokenizer ', i)
                 tokenizer = pc.load(tmp_tokenizer_filename, 2)
-                print('tokenizer loaded')
+                print('tokenizer loaded ', i)
 
                 self.__trained_models.append((tokenizer, model))
             except BaseException:
                 print('Model not found', tmp_model_filename)
                 break
-
+            i = i + 1
