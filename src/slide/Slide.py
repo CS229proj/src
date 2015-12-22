@@ -76,7 +76,7 @@ class Slide(object):
 
     def save_model(self, filename):
         i = 1
-        for model in self.__trained_models:
+        for (tokenizer, model) in self.__trained_models:
             tmp_filename =  filename + '.'+ str(i)
             save(model, tmp_filename)
             i = i + 1
