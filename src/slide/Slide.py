@@ -26,7 +26,7 @@ class Slide(object):
         ]
 
         model = RNN(layers=layers, cost='cce', updater=Adadelta(lr=0.5))
-        model.fit(X, Y, n_epochs=1)
+        model.fit(X, Y, n_epochs=10)
 
         return model
 
