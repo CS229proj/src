@@ -77,6 +77,25 @@ class Slide(object):
     def save_model(self, filename):
         i = 1
         for (tokenizer, model) in self.__trained_models:
-            tmp_filename =  filename + '.'+ str(i)
-            save(model, tmp_filename)
+            tmp_model_filename =  filename + '.'+ str(i) + '.model'
+            save(model, tmp_model_filename)
+            tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
+            tokenizer_file = open(tmp_tokenizer_filename)
+            pc.dump(model, tokenizer_file)
             i = i + 1
+
+    def load_model(self, filename):
+        i = 1
+        while (True):
+            tmp_model_filename =  filename + '.'+ str(i) + '.model'
+            tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
+            i = i + 1
+            try:
+                print('loading model')
+                model = load(tmp_model_filename)
+                print('model loaded')
+                self.__trained_models.append(model)
+            except BaseException:
+                print('Model not found', tmp_model_filename)
+                break
+

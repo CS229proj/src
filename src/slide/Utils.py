@@ -18,7 +18,7 @@ def vectorize_y(Y, label_encoder):
     return Y_vector
 
 def devectorize_y(Y_vector, label_encoder):
-    Y = label_encoder.nverse_transform(Y_vector)
+    Y = label_encoder.inverse_transform(Y_vector)
     return Y
 
 def create_document_term_matrix(X, tokenizer):
