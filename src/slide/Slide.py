@@ -81,7 +81,7 @@ class Slide(object):
             save(model, tmp_model_filename)
             tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
             tokenizer_file = open(tmp_tokenizer_filename, 'wb')
-            pc.dump(model, tokenizer_file)
+            pc.dump(model, tokenizer_file, 2)
             tokenizer_file.close()
             i = i + 1
 
