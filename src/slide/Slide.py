@@ -7,6 +7,7 @@ from passage.preprocessing import *
 from sklearn import preprocessing
 import CharTokenize as ct
 import Utils
+import pickle as pc
 
 class Slide(object):
 
@@ -71,3 +72,8 @@ class Slide(object):
         Y_test_predicted = map(lambda x: Utils.most_common(x), preds)
 
         return Y_test_predicted
+
+    def save(self, filename):
+        output = open(filename, 'wb')
+        pc.dump(self.__trained_models, output, -1)
+        output.close()
