@@ -40,7 +40,7 @@ class Slide(object):
         print(X_train_raw.shape)
         print(Y_train_raw.shape)
 
-        for num_ngram in [2]:#,3,2,5]:
+        for num_ngram in [2,3]:#,3,2,5]:
 
             print('current_ngram : ', num_ngram)
             tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
@@ -79,16 +79,22 @@ class Slide(object):
         sys.setrecursionlimit(10000)
         i = 1
         for (tokenizer, model) in self.__trained_models:
+            print('saving model ', i)
             tmp_model_filename =  filename + '.'+ str(i) + '.model'
             save(model, tmp_model_filename)
+            print('model saved ', i)
+
+            print('saving tokenizer ', i)
             tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
             tokenizer_file = open(tmp_tokenizer_filename, 'wb')
             pc.dump(model, tokenizer_file, 2)
             tokenizer_file.close()
+            print('tokenizer saved ', i)
             i = i + 1
 
     def load_model(self, filename):
         i = 1
+        self.__trained_models[:] = []
         while (True):
             tmp_model_filename =  filename + '.'+ str(i) + '.model'
             tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
@@ -97,7 +103,12 @@ class Slide(object):
                 print('loading model')
                 model = load(tmp_model_filename)
                 print('model loaded')
-                self.__trained_models.append(model)
+
+                print('loading tokenizer')
+                tokenizer = pc.load(tmp_tokenizer_filename, 2)
+                print('tokenizer loaded')
+
+                self.__trained_models.append((tokenizer, model))
             except BaseException:
                 print('Model not found', tmp_model_filename)
                 break

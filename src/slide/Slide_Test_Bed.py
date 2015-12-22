@@ -12,9 +12,8 @@ def main():
 
     slide = lid.Slide()
     slide.train(train_file)
-
     slide.save_model('saved_models/slide_trained.dat')
-    #slide.load_model('slide_trained.dat')
+    #slide.load_model('saved_models/slide_trained.dat')
 
     predictions = slide.predict(test_file)
 
