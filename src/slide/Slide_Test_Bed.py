@@ -12,7 +12,9 @@ def main():
 
     slide = lid.Slide()
     slide.train(train_file)
-    pc.dump(slide, 'slide_trained.dat')
+    output = open('slide_trained.dat', 'wb')
+    pc.dump(slide, output, -1)
+    output.close()
     predictions = slide.predict(test_file)
 
     gold_labels = Utils.get_y(gold_file)
