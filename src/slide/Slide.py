@@ -50,7 +50,7 @@ class Slide(object):
             #print(tokenizer.num_features)
 
             #model = self.__fit_model(X_train_vectorized, Y_train_vectorized, tokenizer.num_features)
-            #self.__trained_models.append((tokenizer, model))
+            self.__trained_models.append(tokenizer)
 
     def load_label_encoder(self, train_file):
         print('load_label_encoder')
@@ -85,7 +85,7 @@ class Slide(object):
         import sys
         sys.setrecursionlimit(100000)
         i = 1
-        for (tokenizer, model) in self.__trained_models:
+        for tokenizer in self.__trained_models:
             try:
                 #print('saving model ', i)
                 #tmp_model_filename =  filename + '.'+ str(i) + '.model'
