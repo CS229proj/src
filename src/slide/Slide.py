@@ -114,10 +114,9 @@ class Slide(object):
             tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
 
             try:
-                f = open(tmp_model_filename, 'rb')
                 print('loading model ', i)
-                model = load(f)
-                f.close()
+                model = load(tmp_model_filename)
+
                 print('model loaded ', i)
 
                 print('loading tokenizer ', i)
