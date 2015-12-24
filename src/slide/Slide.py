@@ -114,12 +114,16 @@ class Slide(object):
             tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
 
             try:
+                f = open(tmp_model_filename, 'rb')
                 print('loading model ', i)
-                model = load(tmp_model_filename)
+                model = load(f)
+                f.close()
                 print('model loaded ', i)
 
                 print('loading tokenizer ', i)
-                tokenizer = pc.load(tmp_tokenizer_filename)
+                f = open(tmp_tokenizer_filename, 'rb')
+                tokenizer = pc.load(f)
+                f.close()
                 print('tokenizer loaded ', i)
 
                 self.__trained_models.append((tokenizer, model))
