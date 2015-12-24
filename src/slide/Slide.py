@@ -63,6 +63,7 @@ class Slide(object):
 
     def predict(self, test_file):
         print('predicting ', test_file)
+        print('start...')
         test_data = pd.read_csv(test_file, encoding='utf-8', sep=r'\t+', header=None, names=['text'])
         X_test_raw = test_data['text'].values
 
