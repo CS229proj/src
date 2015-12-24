@@ -109,6 +109,13 @@ class Slide(object):
                 print('Saving error ', i, ' will continue with saving next model ')
             i = i + 1
 
+        print('encoder saving')
+        tmp_encoder_filename =  filename + '.encoder'
+        encoder_file = open(tmp_encoder_filename, 'wb')
+        pc.dump(self.__label_encoder, encoder_file, 2)
+        encoder_file.close()
+        print('encoder saved')
+
         print('model saved')
 
     def load_model(self, filename):
