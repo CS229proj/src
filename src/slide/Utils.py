@@ -14,6 +14,7 @@ def create_term_document_matrix(X, tokenizer):
 
 def vectorize_y(Y, label_encoder):
     Y_vector = label_encoder.fit_transform(Y)
+    print('classes')
     print(label_encoder.classes_)
     return Y_vector
 

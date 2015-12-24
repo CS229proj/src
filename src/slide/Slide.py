@@ -56,6 +56,7 @@ class Slide(object):
             self.__trained_models.append((tokenizer, model))
 
     def load_label_encoder(self, train_file):
+        print('load_label_encoder')
         train_data = pd.read_csv(train_file, encoding='utf-8', sep=r'\t+', header=None, names=['text', 'label'])
         Y_train_raw = train_data['label'].values
         Utils.vectorize_y(Y_train_raw, self.__label_encoder)
