@@ -55,6 +55,11 @@ class Slide(object):
             model = self.__fit_model(X_train_vectorized, Y_train_vectorized, tokenizer.num_features)
             self.__trained_models.append((tokenizer, model))
 
+    def load_label_encoder(self, train_file):
+        train_data = pd.read_csv(train_file, encoding='utf-8', sep=r'\t+', header=None, names=['text', 'label'])
+        Y_train_raw = train_data['label'].values
+        Utils.vectorize_y(Y_train_raw, self.__label_encoder)
+
     def predict(self, test_file):
         print('predicting ', test_file)
         test_data = pd.read_csv(test_file, encoding='utf-8', sep=r'\t+', header=None, names=['text'])
@@ -63,6 +68,7 @@ class Slide(object):
         preds = []
 
         for (tokenizer, model) in self.__trained_models:
+            print(X_test_raw)
             X_test_vectorized = Utils.create_document_term_matrix(X_test_raw, tokenizer)
             predictions = model.predict(X_test_vectorized)
             Y_test_predicted_vectorized = np.argmax(predictions, axis=1)
