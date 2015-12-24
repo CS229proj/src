@@ -11,9 +11,8 @@ def main():
     gold_file = "../../data/test/test-gold.txt"
 
     slide = lid.Slide()
-    slide.train(train_file)
-    slide.save_model('saved_models/slide_trained.dat')
-    return
+    #slide.train(train_file)
+    #sslide.save_model('saved_models/slide_trained.dat')
     slide.load_label_encoder(train_file)
     slide.load_model('saved_models/slide_trained.dat')
 

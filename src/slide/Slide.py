@@ -37,20 +37,23 @@ class Slide(object):
         X_train_raw = train_data['text'].values
         Y_train_raw = train_data['label'].values
 
+        print(X_train_raw.shape)
+        print(Y_train_raw.shape)
+
         for num_ngram in [4,3,2,5]:
 
             print('current_ngram : ', num_ngram)
             tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
 
             X_train_vectorized = Utils.create_term_document_matrix(X_train_raw, tokenizer)
-            #Y_train_vectorized = Utils.vectorize_y(Y_train_raw, self.__label_encoder)
+            Y_train_vectorized = Utils.vectorize_y(Y_train_raw, self.__label_encoder)
 
-            #print(len(X_train_vectorized))
-            #print(len(Y_train_vectorized))
-            #print(tokenizer.num_features)
+            print(len(X_train_vectorized))
+            print(len(Y_train_vectorized))
+            print(tokenizer.num_features)
 
-            #model = self.__fit_model(X_train_vectorized, Y_train_vectorized, tokenizer.num_features)
-            self.__trained_models.append(tokenizer)
+            model = self.__fit_model(X_train_vectorized, Y_train_vectorized, tokenizer.num_features)
+            self.__trained_models.append((tokenizer, model))
 
     def load_label_encoder(self, train_file):
         print('load_label_encoder')
@@ -85,17 +88,17 @@ class Slide(object):
         import sys
         sys.setrecursionlimit(100000)
         i = 1
-        for tokenizer in self.__trained_models:
+        for (tokenizer, model) in self.__trained_models:
             try:
-                #print('saving model ', i)
-                #tmp_model_filename =  filename + '.'+ str(i) + '.model'
-                #save(model, tmp_model_filename)
-                #print('model saved ', i)
+                print('saving model ', i)
+                tmp_model_filename =  filename + '.'+ str(i) + '.model'
+                save(model, tmp_model_filename)
+                print('model saved ', i)
 
                 print('saving tokenizer ', i)
                 tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
                 tokenizer_file = open(tmp_tokenizer_filename, 'wb')
-                pc.dump(tokenizer, tokenizer_file, 2)
+                pc.dump(model, tokenizer_file, 2)
                 tokenizer_file.close()
                 print('tokenizer saved ', i)
             except:
@@ -122,7 +125,6 @@ class Slide(object):
                 tokenizer = pc.load(f)
                 f.close()
                 print('tokenizer loaded ', i)
-
 
                 print(tokenizer)
                 print(model)
