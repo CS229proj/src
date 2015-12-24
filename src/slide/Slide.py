@@ -68,6 +68,7 @@ class Slide(object):
 
         preds = []
 
+        print('len(self.__trained_models):', len(self.__trained_models))
         for (tokenizer, model) in self.__trained_models:
             print(X_test_raw)
             X_test_vectorized = Utils.create_document_term_matrix(X_test_raw, tokenizer)
