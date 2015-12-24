@@ -123,8 +123,8 @@ class Slide(object):
                 print('tokenizer loaded ', i)
 
                 self.__trained_models.append((tokenizer, model))
-            except BaseException:
-                print('Exception while loading ', i)
+            except Exception, e:
+                print('Exception while loading ', i, str(e))
                 print(tmp_model_filename)
                 print(tmp_tokenizer_filename)
                 break
