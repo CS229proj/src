@@ -13,6 +13,7 @@ def main():
     slide = lid.Slide()
     slide.train(train_file)
     slide.save_model('saved_models/slide_trained.dat')
+    return
     slide.load_label_encoder(train_file)
     slide.load_model('saved_models/slide_trained.dat')
 
