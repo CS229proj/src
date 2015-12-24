@@ -119,7 +119,7 @@ class Slide(object):
                 print('model loaded ', i)
 
                 print('loading tokenizer ', i)
-                tokenizer = pc.load(tmp_tokenizer_filename, 2)
+                tokenizer = pc.load(tmp_tokenizer_filename)
                 print('tokenizer loaded ', i)
 
                 self.__trained_models.append((tokenizer, model))
