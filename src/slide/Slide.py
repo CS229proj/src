@@ -81,7 +81,7 @@ class Slide(object):
             Y_test_raw = Utils.devectorize_y(Y_test_predicted_vectorized, self.__label_encoder)
             preds.append(Y_test_raw)
 
-        preds = zip(preds[0], preds[1], preds[2]) ## needs to be changed
+        preds = zip(*preds) 
         Y_test_predicted = map(lambda x: Utils.most_common(x), preds)
 
         return Y_test_predicted
