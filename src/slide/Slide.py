@@ -71,7 +71,8 @@ class Slide(object):
 
         print('len(self.__trained_models):', len(self.__trained_models))
         for (tokenizer, model) in self.__trained_models:
-            #print(X_test_raw)
+            print(tokenizer)
+            print(model)
             X_test_vectorized = Utils.create_document_term_matrix(X_test_raw, tokenizer)
             predictions = model.predict(X_test_vectorized)
             Y_test_predicted_vectorized = np.argmax(predictions, axis=1)
