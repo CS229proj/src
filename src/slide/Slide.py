@@ -41,7 +41,9 @@ class Slide(object):
         print(X_train_raw.shape)
         print(Y_train_raw.shape)
 
-        for num_ngram in [4,3,2,5]:
+        for num_ngram in [
+            #4,3,2,
+            5]:
 
             print('current_ngram : ', num_ngram)
             tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
@@ -81,7 +83,7 @@ class Slide(object):
             Y_test_raw = Utils.devectorize_y(Y_test_predicted_vectorized, self.__label_encoder)
             preds.append(Y_test_raw)
 
-        preds = zip(*preds) 
+        preds = zip(*preds)
         Y_test_predicted = map(lambda x: Utils.most_common(x), preds)
 
         return Y_test_predicted
