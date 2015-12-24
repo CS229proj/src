@@ -130,4 +130,4 @@ class Slide(object):
                 break
             i = i + 1
 
-
+        print('1-len(self.__trained_models):', len(self.__trained_models))
