@@ -94,22 +94,24 @@ class Slide(object):
         i = 1
         for (tokenizer, model) in self.__trained_models:
             try:
-                print('saving model ', i)
+                print('saving model', i)
                 tmp_model_filename =  filename + '.'+ str(i) + '.model'
-                save(model, tmp_model_filename)
-                print('model saved ', i)
+                model_file = open(tmp_model_filename, 'wb')
+                pc.dump(model, model_file, 2)
+                model_file.close()
+                print('model saved', i)
 
-                print('saving tokenizer ', i)
+                print('saving tokenizer', i)
                 tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
                 tokenizer_file = open(tmp_tokenizer_filename, 'wb')
-                pc.dump(model, tokenizer_file, 2)
+                pc.dump(tokenizer, tokenizer_file, 2)
                 tokenizer_file.close()
-                print('tokenizer saved ', i)
-            except:
-                print('Saving error ', i, ' will continue with saving next model ')
+                print('tokenizer saved', i)
+            except Exception, e:
+                print('Saving ERROR !!!', i, str(e), 'will continue with saving next model')
             i = i + 1
 
-        print('encoder saving')
+        print('saving encoder')
         tmp_encoder_filename =  filename + '.encoder'
         encoder_file = open(tmp_encoder_filename, 'wb')
         pc.dump(self.__label_encoder, encoder_file, 2)
