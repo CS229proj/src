@@ -80,8 +80,9 @@ class Slide(object):
 
             Y_test_raw = Utils.devectorize_y(Y_test_predicted_vectorized, self.__label_encoder)
             preds.append(Y_test_raw)
-
+        print(preds)
         preds = zip(preds)
+        print(preds)
         Y_test_predicted = map(lambda x: Utils.most_common(x), preds)
 
         return Y_test_predicted
