@@ -64,13 +64,7 @@ class Slide(object):
 
     def predict(self, X_test_raw, predictor_list):
 
-        print('predicting')
-        print('start...')
-
-
         preds = []
-
-        print('predictor_list', predictor_list)
 
         if(len(predictor_list) > 1):
             selected_models = operator.itemgetter(*predictor_list)(self.__trained_models)

@@ -41,7 +41,6 @@ def breakdown_evaluation(results, goldtags, human_readable=True, overall_only=Fa
     sum_gold = sum(golds.values())
     accuracy = sum_positives / float(sum_gold)
 
-    print('overall_only:', overall_only)
     if overall_only:
         output_line = map(str, ['Overall', 'Accuracy', 
                                     sum_positives, sum_gold, accuracy])
@@ -49,7 +48,6 @@ def breakdown_evaluation(results, goldtags, human_readable=True, overall_only=Fa
     
     bygroup_output = [] 
 
-    print('human_readable:', human_readable)
     if human_readable:
         print( "=== Results === ")
         for g in groups:
