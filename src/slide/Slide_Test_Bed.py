@@ -65,8 +65,15 @@ def parameter_testing(train_file, test_file, gold_file):
                         overall_accuracy = calculate_accuracy(X_test_raw, gold_labels, slide, predictor_list4, False, True)
                         accuracy_list.append((predictor_list4, overall_accuracy))
 
+    dump_accuracy_list(accuracy_list)
     plot_accuracy_list(accuracy_list)
 
+
+def dump_accuracy_list(accuracy_list):
+    file_name = 'dump_accuracy_list.pck'
+    f = open(file_name, 'wb')
+    pc.dump(accuracy_list, f, 2);
+    f.close()
 
 def plot_accuracy_list(accuracy_list):
     print('plot_accuracy_list')
