@@ -74,7 +74,8 @@ def plot_accuracy_list(accuracy_list):
     ax = fig.add_subplot(111)
     ax.set_ylim(0,1)
     plt.plot(x,y, 'ro')
-    ax.set_xticklabels(x, labels, rotation='vertical')
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation='vertical')
     for i,j in zip(x,y):
         ax.annotate(str(j),xy=(i,j))
 
