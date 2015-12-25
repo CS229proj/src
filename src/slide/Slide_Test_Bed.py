@@ -34,32 +34,32 @@ def parameter_testing(train_file, test_file, gold_file):
     X_test_raw = test_data['text'].values
     gold_labels = Utils.get_y(gold_file)
 
-    param_num = 2
+    param_num = 4
     accuracy_list = []
     for i0 in xrange(param_num):
         predictor_list0 = [i0]
         overall_accuracy = calculate_accuracy(X_test_raw, gold_labels, slide, predictor_list0, False, True)
         accuracy_list.append((predictor_list0, overall_accuracy))
 
-        for i1 in [ x for x in xrange(param_num) if x > i0]:
+        for i1 in [ x for x in xrange(param_num) if x >= i0]:
             predictor_list1 = copy.deepcopy(predictor_list0)
             predictor_list1.append(i1)
             overall_accuracy = calculate_accuracy(X_test_raw, gold_labels, slide, predictor_list1, False, True)
             accuracy_list.append((predictor_list1, overall_accuracy))
 
-            for i2 in [ x for x in xrange(param_num) if x > i1]:
+            for i2 in [ x for x in xrange(param_num) if x >= i1]:
                 predictor_list2 = copy.deepcopy(predictor_list1)
                 predictor_list2.append(i2)
                 overall_accuracy = calculate_accuracy(X_test_raw, gold_labels, slide, predictor_list2, False, True)
                 accuracy_list.append((predictor_list2, overall_accuracy))
 
-                for i3 in [ x for x in xrange(param_num) if x > i2]:
+                for i3 in [ x for x in xrange(param_num) if x >= i2]:
                     predictor_list3 = copy.deepcopy(predictor_list2)
                     predictor_list3.append(i3)
                     overall_accuracy = calculate_accuracy(X_test_raw, gold_labels, slide, predictor_list3, False, True)
                     accuracy_list.append((predictor_list3, overall_accuracy))
 
-                    for i4 in [ x for x in xrange(param_num) if x > i3]:
+                    for i4 in [ x for x in xrange(param_num) if x >= i3]:
                         predictor_list4 = copy.deepcopy(predictor_list4)
                         predictor_list4.append(i4)
                         overall_accuracy = calculate_accuracy(X_test_raw, gold_labels, slide, predictor_list4, False, True)
@@ -70,10 +70,12 @@ def parameter_testing(train_file, test_file, gold_file):
 
 
 def dump_accuracy_list(accuracy_list):
+    print('dump_accuracy_list')
     file_name = 'dump_accuracy_list.pck'
     f = open(file_name, 'wb')
     pc.dump(accuracy_list, f, 2);
     f.close()
+    print('dump_accuracy_list done!')
 
 def plot_accuracy_list(accuracy_list):
     print('plot_accuracy_list')
@@ -91,7 +93,7 @@ def plot_accuracy_list(accuracy_list):
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation='vertical')
     for i,j in zip(x,y):
-        ax.annotate(str(i)+','+str(j),xy=(i,j))
+        ax.annotate(str(i)+' , '+"{0:.2f}".format(round(j,2)),xy=(i,j))
 
     plt.ylabel('Accuracy')
     plt.savefig('plot_accuracy_list.png')
