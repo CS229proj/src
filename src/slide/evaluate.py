@@ -31,8 +31,7 @@ def language_groups(version=2.0):
     return groups
     
 
-def breakdown_evaluation(results, goldtags, version=2.0, human_readable=True,
-                         overall_only=False):    
+def breakdown_evaluation(results, goldtags, version=2.0, human_readable=True,overall_only=False):
     positives = Counter([y for x,y in zip(results,goldtags) if x.lower().replace('_', '-')==y.lower()])
     golds = Counter(goldtags)    
     
