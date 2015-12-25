@@ -77,7 +77,7 @@ class Slide(object):
         if(len(predictor_list) > 1):
             selected_models = operator.itemgetter(*predictor_list)(self.__trained_models)
         else:
-            selected_models = self.__trained_models[0]
+            selected_models = [self.__trained_models[0]]
 
         print('len(selected_models):', len(selected_models))
         print('selected_models', selected_models)
