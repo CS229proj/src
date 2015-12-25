@@ -65,14 +65,20 @@ def plot_accuracy_list(accuracy_list):
     print('plot_accuracy_list')
     x = xrange(len(accuracy_list))
     y = [tupple[1] for tupple in accuracy_list]
- 
+
+    labels = [tupple[0] for tupple in accuracy_list]
+
+    labels =  ','.join(str(x) for x in list for list in labels)
+    print('labels', labels)
+
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.set_ylim(0,1)
-    plt.xticks(x, x)
-    plt.bar(x,y, align='center')
+    plt.plot(x,y, 'ro')
+    ax.set_xticklabels(x, labels, rotation='vertical')
     for i,j in zip(x,y):
         ax.annotate(str(j),xy=(i,j))
+
     plt.ylabel('Accuracy')
     plt.savefig('plot_accuracy_list.png')
     print('plot_accuracy_list done!')
