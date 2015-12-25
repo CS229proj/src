@@ -30,8 +30,8 @@ def parameter_testing(train_file, test_file, gold_file):
     accuracy_list = []
     for i0 in xrange(param_num):
         predictor_list0 = [i0]
-        overall_accuracy = calculate_accuracy(test_file, slide, predictor_list0, True)
-        accuracy_list.append((predictor_list0, overall_accuracy))
+        #overall_accuracy = calculate_accuracy(test_file, slide, predictor_list0, True)
+        #accuracy_list.append((predictor_list0, overall_accuracy))
         for i1 in [ x for x in xrange(param_num) if x > i0]:
             predictor_list1 = predictor_list0
             predictor_list1.append(i1)
