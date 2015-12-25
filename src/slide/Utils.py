@@ -31,9 +31,6 @@ def get_y(fl):
     trY = data['label'].values
     return trY
 
-def flatten(lst):
-    return ','.join(str(x) for x in lst)
-
 
 def most_common(lst):
     return max(set(lst), key=lst.count)
