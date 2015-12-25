@@ -31,7 +31,7 @@ def language_groups(version=2.0):
     return groups
     
 
-def breakdown_evaluation(results, goldtags, version=2.0, human_readable=True,overall_only=False):
+def breakdown_evaluation(results, goldtags, version=2.0, human_readable=True, overall_only=False):
     positives = Counter([y for x,y in zip(results,goldtags) if x.lower().replace('_', '-')==y.lower()])
     golds = Counter(goldtags)    
     
@@ -40,14 +40,16 @@ def breakdown_evaluation(results, goldtags, version=2.0, human_readable=True,ove
     sum_positives = sum(positives.values())
     sum_gold = sum(golds.values())
     accuracy = sum_positives / float(sum_gold)
-    
+
+    print('overall_only:', overall_only)
     if overall_only:
         output_line = map(str, ['Overall', 'Accuracy', 
                                     sum_positives, sum_gold, accuracy])
         return accuracy
     
     bygroup_output = [] 
-    
+
+    print('human_readable:', human_readable)
     if human_readable:
         print( "=== Results === ")
         for g in groups:
