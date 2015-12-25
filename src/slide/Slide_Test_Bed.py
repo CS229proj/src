@@ -65,6 +65,8 @@ def plot_accuracy_list(accuracy_list):
 def calculate_accuracy(test_file, gold_file, slide, predictor_list, human_readable, overall_only):
     print(test_file)
     print(gold_file)
+    print('human_readable',human_readable)
+    print('overall_only',overall_only)
     predictions = slide.predict(test_file, predictor_list)
     gold_labels = Utils.get_y(gold_file)
     overall_accuracy = evaluate.breakdown_evaluation(predictions, gold_labels, human_readable, overall_only)
