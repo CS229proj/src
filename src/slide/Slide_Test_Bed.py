@@ -16,7 +16,7 @@ def main():
     slide.load_model('saved_models/slide_trained.dat')
     #slide.save_model('saved_models/slide_trained.dat')
 
-    predictor_list = [4,3,2,5,5]
+    predictor_list = [1,2,3,4,4]
     predictions = slide.predict(test_file, predictor_list)
 
     gold_labels = Utils.get_y(gold_file)
