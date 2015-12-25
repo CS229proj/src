@@ -60,7 +60,7 @@ def parameter_testing(train_file, test_file, gold_file):
                     accuracy_list.append((predictor_list3, overall_accuracy))
 
                     for i4 in [ x for x in xrange(param_num) if x >= i3]:
-                        predictor_list4 = copy.deepcopy(predictor_list4)
+                        predictor_list4 = copy.deepcopy(predictor_list3)
                         predictor_list4.append(i4)
                         overall_accuracy = calculate_accuracy(X_test_raw, gold_labels, slide, predictor_list4, False, True)
                         accuracy_list.append((predictor_list4, overall_accuracy))
