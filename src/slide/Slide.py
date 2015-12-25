@@ -75,6 +75,7 @@ class Slide(object):
         print('predictor_list', predictor_list)
         selected_models = operator.itemgetter(*predictor_list)(self.__trained_models)
         print('len(selected_models):', len(selected_models))
+        print('selected_models', selected_models)
         for (tokenizer, model) in selected_models:
             print(tokenizer)
             print(model)
