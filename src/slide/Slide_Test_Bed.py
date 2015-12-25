@@ -54,11 +54,13 @@ def parameter_testing(train_file, test_file, gold_file):
 
 
 def plot_accuracy_list(accuracy_list):
+    print('plot_accuracy_list')
     x = xrange(len(accuracy_list))
     y = [tupple[1] for tupple in accuracy_list]
     plt.plot(x, y, 'ro')
     plt.ylabel('Accuracy')
     plt.savefig('plot_accuracy_list.png')
+    print('plot_accuracy_list done!')
 
 def calculate_accuracy(test_file, slide, predictor_list, overall_only):
     predictions = slide.predict(test_file, predictor_list)
