@@ -70,7 +70,8 @@ def breakdown_evaluation(results, goldtags, version=2.0, human_readable=True,
                     bygroup_output.append(result_line)
         # print '\t'.join(output_line)
         return bygroup_output
-        
+
+
 
 def main(system_output, goldfile):
     results = [i.strip().split('\t')[-1] for i in io.open(system_output,'r', encoding='utf-8')]

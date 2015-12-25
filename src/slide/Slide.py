@@ -1,4 +1,4 @@
-
+import operator
 import pandas as pd
 from passage.models import RNN
 from passage.updates import Adadelta
@@ -65,7 +65,8 @@ class Slide(object):
         Y_train_raw = train_data['label'].values
         Utils.vectorize_y(Y_train_raw, self.__label_encoder)
 
-    def predict(self, test_file):
+    def predict(self, test_file, predictor_list):
+
         print('predicting ', test_file)
         print('start...')
         test_data = pd.read_csv(test_file, encoding='utf-8', sep=r'\t+', header=None, names=['text'])
@@ -74,8 +75,9 @@ class Slide(object):
         preds = []
 
         print('len(self.__trained_models):', len(self.__trained_models))
-        Y_test_raw_last = 0
-        for (tokenizer, model) in self.__trained_models:
+
+        selected_models = operator.itemgetter(*predictor_list)(self.__trained_models)
+        for (tokenizer, model) in selected_models:
             print(tokenizer)
             print(model)
             X_test_vectorized = Utils.create_document_term_matrix(X_test_raw, tokenizer)
@@ -84,9 +86,7 @@ class Slide(object):
 
             Y_test_raw = Utils.devectorize_y(Y_test_predicted_vectorized, self.__label_encoder)
             preds.append(Y_test_raw)
-            Y_test_raw_last = Y_test_raw
 
-        preds.append(Y_test_raw_last)
         preds = zip(*preds)
         Y_test_predicted = map(lambda x: Utils.most_common(x), preds)
 
