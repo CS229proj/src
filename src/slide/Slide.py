@@ -62,12 +62,11 @@ class Slide(object):
         Y_train_raw = train_data['label'].values
         Utils.vectorize_y(Y_train_raw, self.__label_encoder)
 
-    def predict(self, test_file, predictor_list):
+    def predict(self, X_test_raw, predictor_list):
 
-        print('predicting ', test_file)
+        print('predicting')
         print('start...')
-        test_data = pd.read_csv(test_file, encoding='utf-8', sep=r'\t+', header=None, names=['text'])
-        X_test_raw = test_data['text'].values
+
 
         preds = []
 
