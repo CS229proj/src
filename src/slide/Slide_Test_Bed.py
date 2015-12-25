@@ -40,6 +40,7 @@ def parameter_testing(train_file, test_file, gold_file):
         predictor_list0 = [i0]
         overall_accuracy = calculate_accuracy(X_test_raw, gold_labels, slide, predictor_list0, False, True)
         accuracy_list.append((predictor_list0, overall_accuracy))
+
         for i1 in [ x for x in xrange(param_num) if x > i0]:
             predictor_list1 = predictor_list0
             predictor_list1.append(i1)
@@ -71,7 +72,7 @@ def plot_accuracy_list(accuracy_list):
     print('plot_accuracy_list')
     x = xrange(len(accuracy_list))
     y = [tupple[1] for tupple in accuracy_list]
-
+    print('accuracy_list', accuracy_list)
     labels = [str(item) for item in [tupple[0] for tupple in accuracy_list]]
 
     print('labels', labels)
