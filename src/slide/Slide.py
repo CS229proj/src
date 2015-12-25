@@ -129,13 +129,13 @@ class Slide(object):
 
             try:
                 print('loading model ', i)
-                model_file = load(tmp_model_filename, 'rb')
+                model_file = open(tmp_model_filename, 'rb')
                 model = pc.load(model_file)
                 model_file.close()
                 print('model loaded ', i)
 
                 print('loading tokenizer ', i)
-                tokenizer_file = load(tmp_tokenizer_filename, 'rb')
+                tokenizer_file = open(tmp_tokenizer_filename, 'rb')
                 tokenizer = pc.load(tokenizer_file)
                 tokenizer_file.close()
                 print('tokenizer loaded ', i)
