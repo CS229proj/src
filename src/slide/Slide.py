@@ -129,14 +129,15 @@ class Slide(object):
 
             try:
                 print('loading model ', i)
-                model = load(tmp_model_filename)
-
+                model_file = load(tmp_model_filename, 'rb')
+                model = pc.load(model_file)
+                model_file.close()
                 print('model loaded ', i)
 
                 print('loading tokenizer ', i)
-                f = open(tmp_tokenizer_filename, 'rb')
-                tokenizer = pc.load(f)
-                f.close()
+                tokenizer_file = load(tmp_tokenizer_filename, 'rb')
+                tokenizer = pc.load(tokenizer_file)
+                tokenizer_file.close()
                 print('tokenizer loaded ', i)
 
                 print(tokenizer)
@@ -149,5 +150,12 @@ class Slide(object):
                 print(tmp_tokenizer_filename)
                 break
             i = i + 1
+
+        print('loading encoder')
+        tmp_encoder_filename =  filename + '.encoder'
+        encoder_file = open(tmp_encoder_filename, 'rb')
+        self.__label_encoder = pc.load(encoder_file)
+        encoder_file.close()
+        print('encoder loaded')
 
         print('1-len(self.__trained_models):', len(self.__trained_models))
