@@ -31,7 +31,7 @@ def language_groups(version=2.0):
     return groups
     
 
-def breakdown_evaluation(results, goldtags, version=2.0, human_readable=True, overall_only=False):
+def breakdown_evaluation(results, goldtags, human_readable=True, overall_only=False, version=2.0):
     positives = Counter([y for x,y in zip(results,goldtags) if x.lower().replace('_', '-')==y.lower()])
     golds = Counter(goldtags)    
     
@@ -77,7 +77,7 @@ def breakdown_evaluation(results, goldtags, version=2.0, human_readable=True, ov
 def main(system_output, goldfile):
     results = [i.strip().split('\t')[-1] for i in io.open(system_output,'r', encoding='utf-8')]
     goldtags = [i.strip().split('\t')[-1] for i in io.open(goldfile,'r', encoding='utf-8')]
-    breakdown_evaluation(results, goldtags, version=2.0, human_readable=True)
+    breakdown_evaluation(results, goldtags, human_readable=True, version=2.0)
     
 if __name__ == '__main__':
     if len(sys.argv) != 3:

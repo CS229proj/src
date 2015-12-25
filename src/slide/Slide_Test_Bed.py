@@ -62,6 +62,7 @@ def plot_accuracy_list(accuracy_list):
     plt.savefig('plot_accuracy_list.png')
     print('plot_accuracy_list done!')
 
+
 def calculate_accuracy(test_file, gold_file, slide, predictor_list, human_readable, overall_only):
     print(test_file)
     print(gold_file)
