@@ -66,9 +66,8 @@ def plot_accuracy_list(accuracy_list):
     x = xrange(len(accuracy_list))
     y = [tupple[1] for tupple in accuracy_list]
 
-    labels = [tupple[0] for tupple in accuracy_list]
+    labels = [Utils.flatten(tupple[0]) for tupple in accuracy_list]
 
-    labels =  ','.join(str(x) for x in list for list in labels)
     print('labels', labels)
 
     fig = plt.figure()
