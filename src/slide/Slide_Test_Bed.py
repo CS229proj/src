@@ -30,24 +30,24 @@ def parameter_testing(train_file, test_file, gold_file):
     accuracy_list = []
     for i0 in xrange(param_num):
         predictor_list0 = [i0]
-        #overall_accuracy = calculate_accuracy(test_file, gold_file, slide, predictor_list0, human_readable, True)
-        #accuracy_list.append((predictor_list0, overall_accuracy))
+        overall_accuracy = calculate_accuracy(test_file, gold_file, slide, predictor_list0, False, True)
+        accuracy_list.append((predictor_list0, overall_accuracy))
         for i1 in [ x for x in xrange(param_num) if x > i0]:
             predictor_list1 = predictor_list0
             predictor_list1.append(i1)
-            overall_accuracy = calculate_accuracy(test_file, gold_file, slide, predictor_list1, human_readable, True)
+            overall_accuracy = calculate_accuracy(test_file, gold_file, slide, predictor_list1, False, True)
             accuracy_list.append((predictor_list1, overall_accuracy))
 
             for i2 in [ x for x in xrange(param_num) if x > i1]:
                 predictor_list2 = predictor_list1
                 predictor_list2.append(i2)
-                overall_accuracy = calculate_accuracy(test_file, gold_file, slide, predictor_list2, human_readable, True)
+                overall_accuracy = calculate_accuracy(test_file, gold_file, slide, predictor_list2, False, True)
                 accuracy_list.append((predictor_list2, overall_accuracy))
 
                 for i3 in [ x for x in xrange(param_num) if x > i2]:
                     predictor_list3 = predictor_list2
                     predictor_list3.append(i3)
-                    overall_accuracy = calculate_accuracy(test_file, gold_file, slide, predictor_list3, human_readable, True)
+                    overall_accuracy = calculate_accuracy(test_file, gold_file, slide, predictor_list3, False, True)
                     accuracy_list.append((predictor_list3, overall_accuracy))
 
     plot_accuracy_list(accuracy_list)
@@ -68,6 +68,7 @@ def calculate_accuracy(test_file, gold_file, slide, predictor_list, human_readab
     predictions = slide.predict(test_file, predictor_list)
     gold_labels = Utils.get_y(gold_file)
     overall_accuracy = evaluate.breakdown_evaluation(predictions, gold_labels, human_readable, overall_only)
+    print('overall_accuracy', overall_accuracy, 'predictor_list', predictor_list)
     return overall_accuracy
 
 
