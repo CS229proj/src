@@ -99,8 +99,10 @@ def plot_accuracy_list(accuracy_list):
     ax = fig.add_subplot(111)
     ax.set_ylim(0,1)
     plt.plot(x,y, 'ro')
-    plt.ylim(0.8, 1)
     plt.figure(figsize=(50,10))
+    plt.xlim(0, max(x))
+    plt.ylim(0.8, 1)
+
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation='vertical')
     #for i,j in zip(x,y):
