@@ -110,7 +110,7 @@ def plot_accuracy_list(accuracy_list, plot_file_name, plot_width=190):
     ax = fig.add_subplot(111)
     ax.plot(x,y, 'ro')
 
-    ax.set_ylim(0.8, 1)
+    ax.set_ylim(min(y)-0.1, max(y)+0.1)
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation='vertical')
     for i,j in zip(x,y):
@@ -136,7 +136,7 @@ def plot_accuracy_list_from_file():
 
     accuracy_list_filtered = [t for t in accuracy_list if t[1]>0.94]
     plot_file_name = 'plot_accuracy_list_filtered.png'
-    plot_accuracy_list(accuracy_list_filtered, plot_file_name, 50)
+    plot_accuracy_list(accuracy_list_filtered, plot_file_name, 35)
 
 if __name__=='__main__':
 
