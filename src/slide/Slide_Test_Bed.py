@@ -109,12 +109,12 @@ def plot_accuracy_list(accuracy_list, plot_file_name, plot_width=190):
     fig = plt.figure(figsize=(plot_width,20))
     ax = fig.add_subplot(111)
     ax.plot(x,y, 'ro')
-
+    ax.set_xlim(min(x)-1, max(x)+1)
     ax.set_ylim(min(y)-0.01, max(y)+0.01)
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation='vertical')
     for i,j in zip(x,y):
-        ax.annotate('('+str(i)+', '+"{0:.3f}".format(round(j,3))+')',xy=(i,j+0.0025))
+        ax.annotate('('+str(i)+', '+"{0:.3f}".format(round(j,3))+')',xy=(i,j+0.0005))
 
     plt.ylabel('Accuracy')
     plt.savefig(plot_file_name)
