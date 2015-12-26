@@ -95,7 +95,7 @@ def plot_accuracy_list(accuracy_list):
 
     print('labels', labels)
 
-    fig = plt.figure(figsize=(70,10))
+    fig = plt.figure(figsize=(100,20))
     ax = fig.add_subplot(111)
     ax.plot(x,y, 'ro')
 
@@ -103,7 +103,7 @@ def plot_accuracy_list(accuracy_list):
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation='vertical')
     for i,j in zip(x,y):
-        ax.annotate(str(i)+' , '+"{0:.2f}".format(round(j,2)),xy=(i,j))
+        ax.annotate(str(i)+' , '+"{0:.3f}".format(round(j,2)),xy=(i,j))
 
     plt.ylabel('Accuracy')
     plt.savefig('plot_accuracy_list.png')
@@ -127,5 +127,4 @@ if __name__=='__main__':
     test_file = "../../data/test/test.txt"
     gold_file = "../../data/test/test-gold.txt"
 
-    #parameter_testing(train_file, test_file, gold_file)
     plot_accuracy_list_from_file()
