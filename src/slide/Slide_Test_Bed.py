@@ -86,15 +86,22 @@ def dump_accuracy_list(accuracy_list, file_name):
     f.close()
     print('dump_accuracy_list done!')
 
+
+def translate_grams(gram_indexes):
+    gram_label_dict = {0:'4G', 1:'3G', 2:'2G', 3: '5G'}
+    translation = [gram_label_dict[gram] for gram in gram_indexes]
+    return translation
+
+
 def plot_accuracy_list(accuracy_list):
     print('plot_accuracy_list')
     x = xrange(len(accuracy_list))
     y = [tupple[1] for tupple in accuracy_list]
     print('accuracy_list', accuracy_list)
 
-    gram_label_dict = {0:'4G', 1:'3G', 2:'2G', 3: '5G'}
 
-    labels = [str(row_index)+': '+str(gram_label_dict[gram_index]) for row_index, gram_index in enumerate([tupple[0] for tupple in accuracy_list])]
+
+    labels = [str(row_index)+': '+str(translate_grams(gram_index)) for row_index, gram_index in enumerate([tupple[0] for tupple in accuracy_list])]
 
     print('labels', labels)
 
