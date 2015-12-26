@@ -136,7 +136,7 @@ def plot_accuracy_list_from_file():
 
     accuracy_list_filtered = [t for t in accuracy_list if t[1]>0.94]
     plot_file_name = 'plot_accuracy_list_filtered.png'
-    plot_accuracy_list(accuracy_list_filtered, plot_file_name)
+    plot_accuracy_list(accuracy_list_filtered, plot_file_name, 50)
 
 if __name__=='__main__':
 
