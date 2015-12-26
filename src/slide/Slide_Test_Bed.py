@@ -100,7 +100,7 @@ def plot_accuracy_list(accuracy_list, plot_file_name, plot_width=190):
     x = xrange(len(accuracy_list))
     y = [tupple[1] for tupple in accuracy_list]
     print('accuracy_list', accuracy_list)
-
+    print('plot_width:', plot_width)
 
     labels = [str(row_index)+': '+str(translate_grams(gram_index)) for row_index, gram_index in enumerate([tupple[0] for tupple in accuracy_list])]
 
