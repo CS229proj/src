@@ -106,7 +106,7 @@ def plot_accuracy_list(accuracy_list, plot_file_name, plot_width=190):
 
     print('labels', labels)
 
-    fig = plt.figure(figsize=(plot_width,20))
+    fig = plt.figure(figsize=(plot_width,25))
     ax = fig.add_subplot(111)
     ax.plot(x,y, 'ro')
     ax.set_xlim(min(x)-1, max(x)+1)
