@@ -110,7 +110,7 @@ def plot_accuracy_list(accuracy_list, plot_file_name, plot_width=190):
     ax = fig.add_subplot(111)
     ax.plot(x,y, 'ro')
 
-    ax.set_ylim(min(y)-0.1, max(y)+0.1)
+    ax.set_ylim(min(y)-0.01, max(y)+0.01)
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation='vertical')
     for i,j in zip(x,y):
