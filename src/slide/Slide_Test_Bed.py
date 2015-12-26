@@ -65,13 +65,22 @@ def parameter_testing(train_file, test_file, gold_file):
                         overall_accuracy = calculate_accuracy(X_test_raw, gold_labels, slide, predictor_list4, False, True)
                         accuracy_list.append((predictor_list4, overall_accuracy))
 
-    dump_accuracy_list(accuracy_list)
+    file_name_accuracy_list = 'dump_accuracy_list.pck'
+    dump_accuracy_list(accuracy_list, file_name_accuracy_list)
     plot_accuracy_list(accuracy_list)
 
 
-def dump_accuracy_list(accuracy_list):
-    print('dump_accuracy_list')
+def load_accuracy_list(load):
+    print('load_accuracy_list')
     file_name = 'dump_accuracy_list.pck'
+    f = open(file_name, 'rb')
+    accuracy_list = pc.load(f);
+    f.close()
+    print('load_accuracy_list done!')
+    return accuracy_list
+
+
+def dump_accuracy_list(accuracy_list, file_name):
     f = open(file_name, 'wb')
     pc.dump(accuracy_list, f, 2);
     f.close()
@@ -106,7 +115,10 @@ def calculate_accuracy(test_file, gold_labels, slide, predictor_list, human_read
     print('overall_accuracy', overall_accuracy, 'predictor_list', predictor_list)
     return overall_accuracy
 
-
+def plot_accuracy_list_from_file():
+    file_name_accuracy_list = 'dump_accuracy_list.pck'
+    accuracy_list = load_accuracy_list(file_name_accuracy_list)
+    plot_accuracy_list(accuracy_list)
 
 if __name__=='__main__':
 
@@ -114,4 +126,5 @@ if __name__=='__main__':
     test_file = "../../data/test/test.txt"
     gold_file = "../../data/test/test-gold.txt"
 
-    parameter_testing(train_file, test_file, gold_file)
+    #parameter_testing(train_file, test_file, gold_file)
+    plot_accuracy_list_from_file()
