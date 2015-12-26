@@ -15,7 +15,7 @@ def train_models(train_file, test_file, gold_file):
     slide.train(train_file)
     #slide.load_label_encoder(train_file)
     #slide.load_model('saved_models/slide_trained.dat')
-    slide.save_model('saved_models/slide_trained_word_gram.dat')
+    slide.save_model('saved_models/slide_trained_unigram.dat')
 
     test_data = pd.read_csv(test_file, encoding='utf-8', sep=r'\t+', header=None, names=['text'])
     X_test_raw = test_data['text'].values
