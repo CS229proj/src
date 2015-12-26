@@ -94,7 +94,7 @@ def plot_accuracy_list(accuracy_list):
 
     gram_label_dict = {0:'4G', 1:'3G', 2:'2G', 3: '5G'}
 
-    labels = [str(row_index)+': '+str(gram_label_dict(gram_index)) for row_index, gram_index in enumerate([tupple[0] for tupple in accuracy_list])]
+    labels = [str(row_index)+': '+str(gram_label_dict[gram_index]) for row_index, gram_index in enumerate([tupple[0] for tupple in accuracy_list])]
 
     print('labels', labels)
 
