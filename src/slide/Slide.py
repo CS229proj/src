@@ -41,10 +41,14 @@ class Slide(object):
         print(X_train_raw.shape)
         print(Y_train_raw.shape)
 
-        for num_ngram in [4,3,2,5]:
+        for num_ngram in [
+            #4,3,2,
+            5
+        ]:
 
             print('current_ngram : ', num_ngram)
-            tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
+            #tokenizer = ct.CharTokenize(character=True, charn=num_ngram, min_df=2, max_features=1000000)
+            tokenizer = ct.CharTokenize(min_df=2, max_features=1000000)
 
             X_train_vectorized = Utils.create_term_document_matrix(X_train_raw, tokenizer)
             Y_train_vectorized = Utils.vectorize_y(Y_train_raw, self.__label_encoder)

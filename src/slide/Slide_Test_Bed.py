@@ -7,22 +7,23 @@ import pickle as pc
 import matplotlib.pyplot as plt
 import pandas as pd
 import copy
-def main(train_file, test_file, gold_file):
+
+
+def train_models(train_file, test_file, gold_file):
 
     slide = lid.Slide()
-    #slide.train(train_file)
+    slide.train(train_file)
     #slide.load_label_encoder(train_file)
-    slide.load_model('saved_models/slide_trained.dat')
-    #slide.save_model('saved_models/slide_trained.dat')
-
-    predictor_list = [0,1,2,3,3]
+    #slide.load_model('saved_models/slide_trained.dat')
+    slide.save_model('saved_models/slide_trained_word_gram.dat')
 
     test_data = pd.read_csv(test_file, encoding='utf-8', sep=r'\t+', header=None, names=['text'])
     X_test_raw = test_data['text'].values
+    predictor_list = [0]
     predictions = slide.predict(X_test_raw, predictor_list)
 
     gold_labels = Utils.get_y(gold_file)
-    evaluate.breakdown_evaluation(predictions, gold_labels)
+    evaluate.breakdown_evaluation(predictions, gold_labels, True, False, 2.0)
 
 
 def parameter_testing(train_file, test_file, gold_file):
@@ -143,4 +144,4 @@ if __name__=='__main__':
     test_file = "../../data/test/test.txt"
     gold_file = "../../data/test/test-gold.txt"
 
-    plot_accuracy_list_from_file()
+    train_models(train_file, test_file, gold_file)
