@@ -112,7 +112,7 @@ def plot_accuracy_list(accuracy_list, plot_file_name, plot_width=190):
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation='vertical')
     for i,j in zip(x,y):
-        ax.annotate('('+str(i)+', '+"{0:.3f}".format(round(j,3))+')',xy=(i,j+0.0003))
+        ax.annotate('('+str(i)+', '+"{0:.3f}".format(round(j,3))+')',xy=(i,j+0.0001))
 
     plt.ylabel('Accuracy')
     plt.savefig(plot_file_name)
