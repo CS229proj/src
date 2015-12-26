@@ -69,7 +69,7 @@ def parameter_testing(train_file, test_file, gold_file):
     dump_accuracy_list(accuracy_list, file_name_accuracy_list)
 
     plot_file_name = 'plot_accuracy_list.png'
-    plot_accuracy_list(accuracy_list, plot_file_name)
+    plot_accuracy_list(accuracy_list, plot_file_name, 50)
 
 
 def load_accuracy_list(load):
@@ -95,7 +95,7 @@ def translate_grams(gram_indexes):
     return translation
 
 
-def plot_accuracy_list(accuracy_list, plot_file_name):
+def plot_accuracy_list(accuracy_list, plot_file_name, plot_width=190):
     print('plot_accuracy_list')
     x = xrange(len(accuracy_list))
     y = [tupple[1] for tupple in accuracy_list]
@@ -106,7 +106,7 @@ def plot_accuracy_list(accuracy_list, plot_file_name):
 
     print('labels', labels)
 
-    fig = plt.figure(figsize=(190,20))
+    fig = plt.figure(figsize=(plot_width,20))
     ax = fig.add_subplot(111)
     ax.plot(x,y, 'ro')
 
