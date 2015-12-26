@@ -67,7 +67,9 @@ def parameter_testing(train_file, test_file, gold_file):
 
     file_name_accuracy_list = 'dump_accuracy_list.pck'
     dump_accuracy_list(accuracy_list, file_name_accuracy_list)
-    plot_accuracy_list(accuracy_list)
+
+    plot_file_name = 'plot_accuracy_list.png'
+    plot_accuracy_list(accuracy_list, plot_file_name)
 
 
 def load_accuracy_list(load):
@@ -93,19 +95,18 @@ def translate_grams(gram_indexes):
     return translation
 
 
-def plot_accuracy_list(accuracy_list):
+def plot_accuracy_list(accuracy_list, plot_file_name):
     print('plot_accuracy_list')
     x = xrange(len(accuracy_list))
     y = [tupple[1] for tupple in accuracy_list]
     print('accuracy_list', accuracy_list)
 
 
-
     labels = [str(row_index)+': '+str(translate_grams(gram_index)) for row_index, gram_index in enumerate([tupple[0] for tupple in accuracy_list])]
 
     print('labels', labels)
 
-    fig = plt.figure(figsize=(200,20))
+    fig = plt.figure(figsize=(190,20))
     ax = fig.add_subplot(111)
     ax.plot(x,y, 'ro')
 
@@ -116,7 +117,7 @@ def plot_accuracy_list(accuracy_list):
         ax.annotate('('+str(i)+', '+"{0:.3f}".format(round(j,3))+')',xy=(i,j+0.0025))
 
     plt.ylabel('Accuracy')
-    plt.savefig('plot_accuracy_list.png')
+    plt.savefig(plot_file_name)
     print('plot_accuracy_list done!')
 
 
@@ -129,7 +130,13 @@ def calculate_accuracy(test_file, gold_labels, slide, predictor_list, human_read
 def plot_accuracy_list_from_file():
     file_name_accuracy_list = 'dump_accuracy_list.pck'
     accuracy_list = load_accuracy_list(file_name_accuracy_list)
-    plot_accuracy_list(accuracy_list)
+
+    plot_file_name = 'plot_accuracy_list.png'
+    plot_accuracy_list(accuracy_list, plot_file_name)
+
+    accuracy_list_filtered = [t for t in accuracy_list if t[1]>0.94]
+    plot_file_name = 'plot_accuracy_list_filtered.png'
+    plot_accuracy_list(accuracy_list_filtered, plot_file_name)
 
 if __name__=='__main__':
 
