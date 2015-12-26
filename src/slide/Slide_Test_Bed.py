@@ -104,13 +104,11 @@ def plot_accuracy_list(accuracy_list, plot_file_name, plot_width=190):
 
     labels = [str(row_index)+': '+str(translate_grams(gram_index)) for row_index, gram_index in enumerate([tupple[0] for tupple in accuracy_list])]
 
-    print('labels', labels)
-
     fig = plt.figure(figsize=(plot_width,30))
     ax = fig.add_subplot(111)
     ax.plot(x,y, 'ro')
     ax.set_xlim(min(x)-1, max(x)+1)
-    ax.set_ylim(min(y)-0.01, max(y)+0.01)
+    ax.set_ylim(min(y)-0.001, max(y)+0.001)
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation='vertical')
     for i,j in zip(x,y):
