@@ -10,13 +10,23 @@ import CharTokenize as ct
 import Utils
 import pickle as pc
 from passage.utils import save, load
-
+import os
 class Slide(object):
 
 
     def __init__(self):
         self.__label_encoder = preprocessing.LabelEncoder()
-        self.__trained_models = []
+        self.__trained_models = {}
+
+
+    def __get_models(self, model_repository_path):
+        models = {}
+        for key in os.listdir(model_repository_path):
+            absolute_path = os.path.join(model_repository_path, key)
+            if os.path.isdir(absolute_path):
+                models[key] = absolute_path
+
+        return models
 
     def __fit_model(self, X, Y, num_features):
 
@@ -67,7 +77,15 @@ class Slide(object):
         Y_train_raw = train_data['label'].values
         Utils.vectorize_y(Y_train_raw, self.__label_encoder)
 
-    def predict(self, X_test_raw, predictor_list):
+    def __load(self, tmp_path):
+        print('loading ', tmp_path)
+        tmp_file = open(tmp_path, 'rb')
+        tmp_obj = pc.load(tmp_file)
+        tmp_file.close()
+        print('loaded ', tmp_path)
+        return tmp_obj
+
+    def predict_batch(self, X_test_raw, predictor_list):
 
         preds = []
 
@@ -88,6 +106,40 @@ class Slide(object):
         Y_test_predicted = map(lambda x: Utils.most_common(x), preds)
 
         return Y_test_predicted
+
+    def predict(self, query_text, predictor_list):
+
+        preds = []
+
+        selected_models = []
+
+        print(predictor_list)
+
+        for key in predictor_list:
+            print(key)
+            if key in self.__trained_models.keys():
+                tmp_model = self.__trained_models[key]
+                selected_models.append(tmp_model)
+
+        print(selected_models)
+
+        for (tokenizer, model) in selected_models:
+            print(tokenizer)
+            print(model)
+            query_vectorized = Utils.create_document_term_matrix(query_text, tokenizer)
+            predictions = model.predict(query_vectorized)
+            prediction_vectorized = np.argmax(predictions, axis=1)
+            prediction_raw = Utils.devectorize_y(prediction_vectorized, self.__label_encoder)
+            preds.append(prediction_raw)
+
+        if len(preds) == 0:
+            return 'xx'
+
+        preds = zip(*preds)
+        print('preds', preds)
+        prediction = Utils.most_common(preds)
+        return prediction
+
 
     def save_model(self, filename):
         import sys
@@ -121,42 +173,23 @@ class Slide(object):
 
         print('model saved')
 
-    def load_model(self, filename):
-        i = 1
-        self.__trained_models[:] = []
-        while (True):
-            tmp_model_filename =  filename + '.'+ str(i) + '.model'
-            tmp_tokenizer_filename =  filename + '.'+ str(i) + '.tokenizer'
+    def load_model(self, model_repository_path):
 
+        models = self.__get_models(model_repository_path)
+        print('models', models)
+        self.__trained_models = {}
+
+        for key, model_path in models.iteritems():
             try:
-                print('loading model ', i)
-                model_file = open(tmp_model_filename, 'rb')
-                model = pc.load(model_file)
-                model_file.close()
-                print('model loaded ', i)
-
-                print('loading tokenizer ', i)
-                tokenizer_file = open(tmp_tokenizer_filename, 'rb')
-                tokenizer = pc.load(tokenizer_file)
-                tokenizer_file.close()
-                print('tokenizer loaded ', i)
-
-                print(tokenizer)
-                print(model)
-
-                self.__trained_models.append((tokenizer, model))
+                model = self.__load(os.path.join(model_path, 'slide.model'))
+                tokenizer = self.__load(os.path.join(model_path, 'slide.tokenizer'))
+                self.__trained_models[key] = (tokenizer, model)
             except Exception, e:
-                print('Exception while loading ', i, str(e))
-                print(tmp_model_filename)
-                print(tmp_tokenizer_filename)
-                break
-            i = i + 1
+                print('Exception while loading ', model_path, str(e))
+
 
         print('loading encoder')
-        tmp_encoder_filename =  filename + '.encoder'
-        encoder_file = open(tmp_encoder_filename, 'rb')
-        self.__label_encoder = pc.load(encoder_file)
-        encoder_file.close()
+        self.__label_encoder = self.__load(os.path.join(model_repository_path, 'slide.encoder'))
         print('encoder loaded')
 
         print('1-len(self.__trained_models):', len(self.__trained_models))
